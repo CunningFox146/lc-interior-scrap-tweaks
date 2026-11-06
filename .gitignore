@@ -2,6 +2,7 @@ bin/
 obj/
 .vs/
 dist/
+.DS_Store
 libs/**/*.dll
 
 .idea/
