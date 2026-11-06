@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Link GitHub repo on the Thunderstore page (`website_url`). No code changes.
+
 ## 1.0.0
 
 - Initial release.

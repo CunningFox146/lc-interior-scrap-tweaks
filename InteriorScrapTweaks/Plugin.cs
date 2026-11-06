@@ -10,7 +10,7 @@ public class Plugin : BaseUnityPlugin
 {
     public const string PluginGuid = "CunningFox146.InteriorScrapTweaks";
     public const string PluginName = "InteriorScrapTweaks";
-    public const string PluginVersion = "1.0.0";
+    public const string PluginVersion = "1.0.1";
 
     internal static ManualLogSource ModLogger;
 
