@@ -1,0 +1,9 @@
+{
+  "name": "InteriorScrapTweaks",
+  "version_number": "1.0.0",
+  "website_url": "",
+  "description": "Scales scrap amount and value depending on the interior (dungeon). Per-interior multipliers keyed by dungeon name; works with modded interiors and LethalLevelLoader.",
+  "dependencies": [
+    "BepInEx-BepInExPack-5.4.2305"
+  ]
+}

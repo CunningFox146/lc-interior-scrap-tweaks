@@ -1,0 +1,72 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <AssemblyName>InteriorScrapTweaks</AssemblyName>
+        <RootNamespace>InteriorScrapTweaks</RootNamespace>
+        <Version>1.0.0</Version>
+        <Nullable>disable</Nullable>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+
+    <!--
+      Local game/reference assemblies (proprietary, not committed).
+      Copy the required DLLs into libs/ (see libs/README.md),
+      or override any path at build time, e.g.:
+      dotnet build -p:LethalCompanyDir="<game Managed folder>" -c Release
+    -->
+    <PropertyGroup>
+        <LethalCompanyDir Condition="'$(LethalCompanyDir)' == ''">$(MSBuildThisFileDirectory)..\libs\LethalCompany</LethalCompanyDir>
+        <BepInExCoreDir Condition="'$(BepInExCoreDir)' == ''">$(MSBuildThisFileDirectory)..\libs\BepInExCore</BepInExCoreDir>
+        <LethalLevelLoaderDir Condition="'$(LethalLevelLoaderDir)' == ''">$(MSBuildThisFileDirectory)..\libs\LethalLevelLoader</LethalLevelLoaderDir>
+        <ThunderstoreProfilePluginsDir Condition="'$(ThunderstoreProfilePluginsDir)' == ''"></ThunderstoreProfilePluginsDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(LethalCompanyDir)\Assembly-CSharp.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="DunGen">
+            <HintPath>$(LethalCompanyDir)\DunGen.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>$(LethalCompanyDir)\UnityEngine.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(LethalCompanyDir)\UnityEngine.CoreModule.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Unity.Netcode.Runtime">
+            <HintPath>$(LethalCompanyDir)\Unity.Netcode.Runtime.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="BepInEx">
+            <HintPath>$(BepInExCoreDir)\BepInEx.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="0Harmony">
+            <HintPath>$(BepInExCoreDir)\0Harmony.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <!-- Compile-time only: LLL stays a runtime-optional integration, see LethalLevelLoaderIntegration.cs. -->
+        <Reference Include="LethalLevelLoader">
+            <HintPath>$(LethalLevelLoaderDir)\LethalLevelLoader.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+
+    <!-- Optional local deploy: only runs when ThunderstoreProfilePluginsDir is passed, e.g. -p:ThunderstoreProfilePluginsDir="<profile BepInEx plugins folder>". -->
+    <Target Name="CopyModToThunderstoreProfile" AfterTargets="Build" Condition="'$(ThunderstoreProfilePluginsDir)' != ''">
+        <MakeDir Directories="$(ThunderstoreProfilePluginsDir)\$(AssemblyName)" Condition="!Exists('$(ThunderstoreProfilePluginsDir)\$(AssemblyName)')" />
+        <Copy SourceFiles="$(TargetPath)"
+              DestinationFolder="$(ThunderstoreProfilePluginsDir)\$(AssemblyName)"
+              SkipUnchangedFiles="true" />
+        <Message Importance="high" Text="Deployed $(AssemblyName).dll to $(ThunderstoreProfilePluginsDir)\$(AssemblyName)" />
+    </Target>
+
+</Project>
