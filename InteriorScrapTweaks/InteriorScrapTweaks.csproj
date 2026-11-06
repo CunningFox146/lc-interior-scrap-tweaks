@@ -9,14 +9,9 @@
         <Nullable>disable</Nullable>
         <ImplicitUsings>disable</ImplicitUsings>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <DebugType>portable</DebugType>
     </PropertyGroup>
 
-    <!--
-      Local game/reference assemblies (proprietary, not committed).
-      Copy the required DLLs into libs/ (see libs/README.md),
-      or override any path at build time, e.g.:
-      dotnet build -p:LethalCompanyDir="<game Managed folder>" -c Release
-    -->
     <PropertyGroup>
         <LethalCompanyDir Condition="'$(LethalCompanyDir)' == ''">$(MSBuildThisFileDirectory)..\libs\LethalCompany</LethalCompanyDir>
         <BepInExCoreDir Condition="'$(BepInExCoreDir)' == ''">$(MSBuildThisFileDirectory)..\libs\BepInExCore</BepInExCoreDir>
